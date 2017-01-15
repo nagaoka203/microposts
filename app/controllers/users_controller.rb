@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
   
   def show
     @user = User.find(params[:id])
@@ -8,6 +9,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @btn = "新規登録"
   end
   
   def create
@@ -17,18 +19,21 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render 'new'
+      @btn = "新規登録"
     end
   end
   
   # ここから 課題1で追加
   def edit
+    @btn = "編集"
   end
   
   def update
     if @user.update(user_params)
-      redirect_to root_path , notice: 'ユーザ情報を編集しました！'
+      redirect_to @user , notice: 'ユーザ情報を編集しました！'
     else
       render 'edit'
+      @btn = "編集"
     end
   end
   # ここまで
@@ -42,5 +47,13 @@ class UsersController < ApplicationController
   
   def set_user
     @user = User.find(params[:id])
+  end
+  
+  def correct_user
+    if @user != current_user
+      redirect_to root_path
+    end
+    
+    #redirect_to root_path if @user != current_user
   end
 end
