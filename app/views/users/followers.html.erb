@@ -1,0 +1,9 @@
+<h3>フォロワー一覧</h3>
+
+<% @users.each do |user| %>
+    <%= link_to gravatar_for(user, size:50),user %>
+    <span class="user"><%= link_to user.name, user %></span><br>
+    居住地域：<span class="location"><%= link_to user.location, user %></span>
+    <br>
+  <br>
+<% end %>

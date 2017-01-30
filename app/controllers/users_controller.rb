@@ -38,6 +38,19 @@ class UsersController < ApplicationController
   end
   # ここまで
   
+  # 課題2
+  def followings
+    @user  = User.find(params[:id])
+    @users = @user.following_users
+  end
+  
+# 課題2
+  def followers
+    @user  = User.find(params[:id])
+    @users = @user.follower_users
+  end
+  
+  
   private
   
   def user_params
@@ -56,4 +69,5 @@ class UsersController < ApplicationController
     
     #redirect_to root_path if @user != current_user
   end
+  
 end
